@@ -1,3 +1,20 @@
+# Note from the author
+
+This is my first attempt at vibe coding from scratch. I had just come back from a Langchain Academy Live workshop to learn about how to use LangGraph to code general purpose agents, and decided to have Cursor help me bootstrap the application but in a way that is easy to deploy to Cloud Run.
+
+The part that is a bit tricky about it is I wanted it to be able to be almost fully stateless in Cloud Run, and use the Memory Saver LangGraph paradigm to be able to store and retrieve the state so that when triaging emails, the human-in-the-loop threads can be stored offline in your data storage of choice. I wanted to test the ergonomics of this.
+
+I was pretty impressed with how Cursor was able to almost get a Cloud Run configuration generated for me off the bat. I was less impressed with Cursor's ability to write up the whole logic of the application in one shot. It was pretty tedious to have to troubleshoot the command flow of this graph. However! It taught me the ins and outs of LangGraph really quickly! I feel like I understand the usefulness of LangGraph Studio a lot more now too. But a lot of this was old fashioned debugging and logger statements (which I left in but should clean up)
+
+Right now, it's pretty basic and doesn't use interrupt() or Command() features, mainly relying on the state management. But it works in Cloud Run, though I'm not sure how long because right now the state is in-memory and there is a little bit of stickiness allowing me to retrieve the state minutes after storing. 
+
+Some TODOs:
+* Store the state in an actual persistent storage
+* Replace the InterruptExceptions with actual interrupt / Command() flow
+* Clean up logging statements
+* Make everything more programmatic when setting up (from storage to CLoud Run compute setup)
+
+
 # Email Triage Agent with LangGraph
 
 This project implements an intelligent email triage system using LangGraph agents with human-in-the-loop functionality. The system analyzes incoming emails and determines whether they should be marked as FYI, discarded, or responded to, with the ability to interrupt execution for human approval when responses are needed.
