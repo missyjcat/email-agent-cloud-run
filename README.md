@@ -41,7 +41,7 @@ The system consists of:
 1. Clone the repository:
 ```bash
 git clone <repository-url>
-cd langgraph-studying
+cd email-agent-cloud-run
 ```
 
 2. Create a virtual environment:
