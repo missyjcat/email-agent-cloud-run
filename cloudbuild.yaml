@@ -1,0 +1,51 @@
+steps:
+  # Build the container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', '$REGION-docker.pkg.dev/$PROJECT_ID/email-triage-agent/email-triage-agent:$COMMIT_SHA', '.']
+  
+  # Push the container image to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', '$REGION-docker.pkg.dev/$PROJECT_ID/email-triage-agent/email-triage-agent:$COMMIT_SHA']
+  
+  # Tag the image with 'latest' tag
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['tag', '$REGION-docker.pkg.dev/$PROJECT_ID/email-triage-agent/email-triage-agent:$COMMIT_SHA', '$REGION-docker.pkg.dev/$PROJECT_ID/email-triage-agent/email-triage-agent:latest']
+  
+  # Push the 'latest' tagged image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', '$REGION-docker.pkg.dev/$PROJECT_ID/email-triage-agent/email-triage-agent:latest']
+  
+  # Deploy to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'email-triage-agent'
+      - '--image'
+      - '$REGION-docker.pkg.dev/$PROJECT_ID/email-triage-agent/email-triage-agent:$COMMIT_SHA'
+      - '--region'
+      - '$REGION'
+      - '--platform'
+      - 'managed'
+      - '--allow-unauthenticated'
+      - '--memory'
+      - '4Gi'
+      - '--cpu'
+      - '2'
+      - '--timeout'
+      - '300'
+      - '--concurrency'
+      - '80'
+      - '--set-env-vars'
+      - 'LANGGRAPH_LOG_LEVEL=INFO,PORT=8080'
+      - '--set-secrets'
+      - 'OPENAI_API_KEY=openai-api-key:latest'
+
+# Store images in Artifact Registry
+images:
+  - '$REGION-docker.pkg.dev/$PROJECT_ID/email-triage-agent/email-triage-agent:$COMMIT_SHA'
+  - '$REGION-docker.pkg.dev/$PROJECT_ID/email-triage-agent/email-triage-agent:latest'
+
+# Build timeout
+timeout: '1200s'

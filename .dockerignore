@@ -1,0 +1,83 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Logs
+*.log
+
+# Environment files
+.env
+.env.local
+.env.production
+
+# Development files (legacy versions)
+email_agent.py
+email_agent_v2.py
+email_agent_final.py
+email_agent_command.py
+
+# Test and demo files
+test_agent.py
+demo.py
+
+# Documentation
+README.md
+PROJECT_STRUCTURE.md
+
+# Startup scripts
+start.sh
+start.bat
+
+# Docker
+Dockerfile
+.dockerignore
+
+# Cloud Run
+cloudbuild.yaml
+service.yaml
