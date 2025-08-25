@@ -15,7 +15,7 @@ Some TODOs:
 * Make everything more programmatic when setting up (from storage to CLoud Run compute setup)
 
 
-# Email Triage Agent with LangGraph
+# Email Triage Agent with LangGraph and Cloud Run
 
 This project implements an intelligent email triage system using LangGraph agents with human-in-the-loop functionality. The system analyzes incoming emails and determines whether they should be marked as FYI, discarded, or responded to, with the ability to interrupt execution for human approval when responses are needed.
 
